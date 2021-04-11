@@ -22,9 +22,12 @@ WiFiClient espClient;
 PubSubClient client(espClient);
 
 void setup() {
-  DEBUG_BEGIN
-  DEBUG_PRINTLN("")
-  //Serial.begin(115200);
+  //DEBUG_BEGIN
+  //DEBUG_PRINTLN("")
+  Serial.begin(115200);
+  Serial.println(" I can print something");
+
+  
 
   WiFi.begin(ssid, password);
 

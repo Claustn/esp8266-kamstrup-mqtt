@@ -1,0 +1,121 @@
+sensor:  
+  - platform: mqtt
+    name: "Kamstrup activePowerPlus "
+    unit_of_measurement: "watts"
+    state_topic: "kamstrup/power/activePowerPlus"
+  - platform: mqtt
+    name: "Kamstrup activePowerMinus "
+    unit_of_measurement: "watts"
+    state_topic: "kamstrup/power/activePowerMinus"
+  - platform: mqtt
+    name: "Kamstrup activePowerPlusL1 "
+    unit_of_measurement: "watts"
+    state_topic: "kamstrup/power/activePowerPlusL1"
+  - platform: mqtt
+    name: "Kamstrup activePowerMinusL1 "
+    unit_of_measurement: "watts"
+    state_topic: "kamstrup/power/activePowerMinusL1"
+  - platform: mqtt
+    name: "Kamstrup activePowerPlusL2 "
+    unit_of_measurement: "watts"
+    state_topic: "kamstrup/power/activePowerPlusL2"
+  - platform: mqtt
+    name: "Kamstrup activePowerMinusL2 "
+    unit_of_measurement: "watts"
+    state_topic: "kamstrup/power/activePowerMinusL2"
+  - platform: mqtt
+    name: "Kamstrup activePowerPlusL3 "
+    unit_of_measurement: "watts"
+    state_topic: "kamstrup/power/activePowerPlusL3"
+  - platform: mqtt
+    name: "Kamstrup activePowerMinusL3 "
+    unit_of_measurement: "watts"
+    state_topic: "kamstrup/power/activePowerMinusL3"
+  - platform: mqtt
+    name: "Kamstrup reactivePowerPlus "
+    unit_of_measurement: "watts"
+    state_topic: "kamstrup/power/reactivePowerPlus"
+  - platform: mqtt
+    name: "Kamstrup reactivePowerMinus "
+    unit_of_measurement: "watts"
+    state_topic: "kamstrup/power/reactivePowerMinus"
+  - platform: mqtt
+    name: "Kamstrup powerFactorL1 "
+    unit_of_measurement: "%"
+    state_topic: "kamstrup/power/powerFactorL1"
+  - platform: mqtt
+    name: "Kamstrup powerFactorL2 "
+    unit_of_measurement: "%"
+    state_topic: "kamstrup/power/powerFactorL2"
+  - platform: mqtt
+    name: "Kamstrup powerFactorL3 "
+    unit_of_measurement: "%"
+    state_topic: "kamstrup/power/powerFactorL3"
+  - platform: mqtt
+    name: "Kamstrup powerFactorTotal "
+    unit_of_measurement: "%"
+    state_topic: "kamstrup/power/powerFactorTotal"
+  - platform: mqtt
+    name: "Kamstrup L1 "
+    unit_of_measurement: "V"
+    state_topic: "kamstrup/voltage/L1"
+  - platform: mqtt
+    name: "Kamstrup L2 "
+    unit_of_measurement: "V"
+    state_topic: "kamstrup/voltage/L2"
+  - platform: mqtt
+    name: "Kamstrup L3 "
+    unit_of_measurement: "V"
+    state_topic: "kamstrup/voltage/L3"
+  - platform: mqtt
+    name: "Kamstrup L1 "
+    unit_of_measurement: "A"
+    state_topic: "kamstrup/current/L1"
+  - platform: mqtt
+    name: "Kamstrup L2 "
+    unit_of_measurement: "A"
+    state_topic: "kamstrup/current/L2"
+  - platform: mqtt
+    name: "Kamstrup L3 "
+    unit_of_measurement: "A"
+    state_topic: "kamstrup/current/L3"
+  - platform: mqtt
+    name: "Kamstrup activeImportKWh "
+    unit_of_measurement: "KWh"
+    state_topic: "kamstrup/energy/activeImportKWh"
+  - platform: mqtt
+    name: "Kamstrup activeExportKWh "
+    unit_of_measurement: "KWh"
+    state_topic: "kamstrup/energy/activeExportKWh"
+  - platform: mqtt
+    name: "Kamstrup activeImportKWhL1 "
+    unit_of_measurement: "KWh"
+    state_topic: "kamstrup/energy/activeImportKWhL1"
+  - platform: mqtt
+    name: "Kamstrup activeExportKWhL1 "
+    unit_of_measurement: "KWh"
+    state_topic: "kamstrup/energy/activeExportKWhL1"
+  - platform: mqtt
+    name: "Kamstrup activeImportKWhL2 "
+    unit_of_measurement: "KWh"
+    state_topic: "kamstrup/energy/activeImportKWhL2"
+  - platform: mqtt
+    name: "Kamstrup activeExportKWhL2 "
+    unit_of_measurement: "KWh"
+    state_topic: "kamstrup/energy/activeExportKWhL2"
+  - platform: mqtt
+    name: "Kamstrup activeImportKWhL3 "
+    unit_of_measurement: "KWh"
+    state_topic: "kamstrup/energy/activeImportKWhL3"
+  - platform: mqtt
+    name: "Kamstrup activeExportKWhL3 "
+    unit_of_measurement: "KWh"
+    state_topic: "kamstrup/energy/activeExportKWhL3"
+  - platform: mqtt
+    name: "Kamstrup reactiveImportKWh "
+    unit_of_measurement: "KWh"
+    state_topic: "kamstrup/energy/reactiveImportKWh"
+  - platform: mqtt
+    name: "Kamstrup reactiveExportKWh "
+    unit_of_measurement: "KWh"
+    state_topic: "kamstrup/energy/reactiveExportKWh"
