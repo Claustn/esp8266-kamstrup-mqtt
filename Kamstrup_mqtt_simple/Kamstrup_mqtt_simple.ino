@@ -17,6 +17,7 @@ uint8_t decryptedFrameBuffer[500];
 VectorView decryptedFrame(decryptedFrameBuffer, 0);
 MbusStreamParser streamParser(receiveBuffer, sizeof(receiveBuffer));
 mbedtls_gcm_context m_ctx;
+unsigned long currentMillis;
 
 WiFiClient espClient;
 PubSubClient client(espClient);
@@ -81,6 +82,17 @@ void loop() {
       }
     }
   }
+
+  currentMillis = millis();
+  // if WiFi is down, try reconnecting
+  if ((WiFi.status() != WL_CONNECTED) && (currentMillis - previousMillis >=interval)) {
+    Serial.print(millis());
+    Serial.println("Reconnecting to WiFi...");
+    WiFi.disconnect();
+    WiFi.reconnect();
+    previousMillis = currentMillis;
+  }
+
   client.loop();
 }
 
