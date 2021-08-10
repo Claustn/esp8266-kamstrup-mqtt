@@ -1,12 +1,18 @@
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
+#include <ESP8266httpUpdate.h>
 #include "gcm.h"
 #include "mbusparser.h"
 #include "secrets.h"
+#include "parameters.h"  // Slyngel const char* dbstring1 = "http://192.168.X.X:3000/hus/public";
+
 
 #define DEBUG_BEGIN Serial.begin(115200);
 #define DEBUG_PRINT(x) Serial.print(x);sendmsg(String(mqtt_topic)+"/status",x);
 #define DEBUG_PRINTLN(x) Serial.println(x);sendmsg(String(mqtt_topic)+"/status",x);
+
+const char* softwareVersion = "20210810"; // Update This!!
+
 
 const size_t headersize = 11;
 const size_t footersize = 3;
@@ -24,6 +30,7 @@ PubSubClient client(espClient);
 void setup() {
   //DEBUG_BEGIN
   //DEBUG_PRINTLN("")
+  pinMode(LED_BUILTIN, OUTPUT); // D4 = Led_builtin on Wemos Also used to power Light sensor (ground while LOW = Light on LED)
   Serial.begin(115200);
   Serial.println(" I can print something");
 
@@ -60,6 +67,9 @@ void setup() {
   hexStr2bArr(encryption_key, conf_key, sizeof(encryption_key));
   hexStr2bArr(authentication_key, conf_authkey, sizeof(authentication_key));
   Serial.println("Setup completed");
+
+	blink(3);
+	checkForUpdates(); // Slyngel OTA update
 
 }
 
@@ -238,4 +248,69 @@ void sendmsg(String topic, String payload) {
     delay(60*1000);
     ESP.restart();
   }
+}
+
+void checkForUpdates() {
+	// Slyngel
+  String mac = WiFi.macAddress();
+  String fwURL = String( fwUrlBase );
+  fwURL.concat( mac );
+  String fwVersionURL = fwURL;
+  fwVersionURL.concat( ".version" );
+
+  Serial.println( "Checking for firmware updates." );
+  Serial.print( "MAC address: " );
+  Serial.println( mac );
+  Serial.print( "Firmware version URL: " );
+  Serial.println( fwVersionURL );
+
+  HTTPClient httpClient;
+  httpClient.begin( fwVersionURL );
+  int httpCode = httpClient.GET();
+  if ( httpCode == 200 ) {
+    String newFWVersion = httpClient.getString();
+    newFWVersion.trim();
+    Serial.print( "Current firmware version: " );
+    Serial.println( softwareVersion );
+    Serial.print( "Available firmware version: " );
+    Serial.println( newFWVersion );
+
+   if ( newFWVersion > softwareVersion ) {
+      Serial.println( "Preparing to update" );
+
+      String fwImageURL = fwURL;
+      fwImageURL.concat( ".bin" );
+     t_httpUpdate_return ret = ESPhttpUpdate.update( fwImageURL );
+
+      switch (ret) {
+        case HTTP_UPDATE_FAILED:
+          Serial.printf("HTTP_UPDATE_FAILD Error (%d): %s", ESPhttpUpdate.getLastError(), ESPhttpUpdate.getLastErrorString().c_str());
+          break;
+
+        case HTTP_UPDATE_NO_UPDATES:
+          Serial.println("HTTP_UPDATE_NO_UPDATES");
+          break;
+      }
+    }
+    else {
+      Serial.println( "Already on latest version" );
+    }
+  }
+  else {
+   Serial.print( "Firmware version check failed, got HTTP response code " );
+    Serial.println( httpCode );
+  }
+  httpClient.end();
+	blink(4);
+}
+
+void blink(int count) {
+	int i;
+	digitalWrite(LED_BUILTIN, LOW); 
+	for (i=0; i<count; i++) {
+		digitalWrite(LED_BUILTIN, HIGH);   // turn the LED and BME on (LOW is the voltage level)
+		delay(300);
+		digitalWrite(LED_BUILTIN, LOW); 
+		delay(300);		
+	}
 }
