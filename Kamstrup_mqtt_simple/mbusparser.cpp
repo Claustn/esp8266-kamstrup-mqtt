@@ -167,12 +167,12 @@ MeterData parseMbusFrame(const VectorView& frame)
       result.powerFactorL2 = getPower(frame, POWER_FACTOR_L2, result.powerFactorValidL2);
       result.powerFactorL3 = getPower(frame, POWER_FACTOR_L3, result.powerFactorValidL3);
       result.powerFactorTotal = getPower(frame, POWER_FACTOR, result.powerFactorTotalValid);
-      result.activeImportWhL1 = getPower(frame, ACTIVE_IMPORT_L1, result.activeImportWhValidL1);
-      result.activeImportWhL2 = getPower(frame, ACTIVE_IMPORT_L2, result.activeImportWhValidL2);
-      result.activeImportWhL3 = getPower(frame, ACTIVE_IMPORT_L3, result.activeImportWhValidL3);
-      result.activeExportWhL1 = getPower(frame, ACTIVE_EXPORT_L1, result.activeExportWhValidL1);
-      result.activeExportWhL2 = getPower(frame, ACTIVE_EXPORT_L2, result.activeExportWhValidL2);
-      result.activeExportWhL3 = getPower(frame, ACTIVE_EXPORT_L3, result.activeExportWhValidL3);
+      result.activeImportWhL1 = getPower(frame, ACTIVE_IMPORT_L1, result.activeImportWhValidL1)*10;
+      result.activeImportWhL2 = getPower(frame, ACTIVE_IMPORT_L2, result.activeImportWhValidL2)*10;
+      result.activeImportWhL3 = getPower(frame, ACTIVE_IMPORT_L3, result.activeImportWhValidL3)*10;
+      result.activeExportWhL1 = getPower(frame, ACTIVE_EXPORT_L1, result.activeExportWhValidL1)*10;
+      result.activeExportWhL2 = getPower(frame, ACTIVE_EXPORT_L2, result.activeExportWhValidL2)*10;
+      result.activeExportWhL3 = getPower(frame, ACTIVE_EXPORT_L3, result.activeExportWhValidL3)*10;
     }
   }
   return result;
