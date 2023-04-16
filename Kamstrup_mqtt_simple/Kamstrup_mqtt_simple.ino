@@ -18,6 +18,11 @@ VectorView decryptedFrame(decryptedFrameBuffer, 0);
 MbusStreamParser streamParser(receiveBuffer, sizeof(receiveBuffer));
 mbedtls_gcm_context m_ctx;
 
+// wifi auto reconnect
+unsigned long currentMillis;
+unsigned long previousMillis;
+unsigned long wifiReconnectInterval = 30000;
+
 WiFiClient espClient;
 PubSubClient client(espClient);
 
@@ -81,7 +86,22 @@ void loop() {
       }
     }
   }
+
+  reconnectWifi();
+
   client.loop();
+}
+
+void reconnectWifi() {
+  currentMillis = millis();
+  // if WiFi is down, try reconnecting
+  if ((WiFi.status() != WL_CONNECTED) && (currentMillis - previousMillis >= wifiReconnectInterval)) {
+    Serial.print(millis());
+    Serial.println("Reconnecting to WiFi...");
+    WiFi.disconnect();
+    WiFi.reconnect();
+    previousMillis = currentMillis;
+  }
 }
 
 
