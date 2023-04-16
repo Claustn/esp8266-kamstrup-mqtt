@@ -26,7 +26,7 @@ void setup() {
   //DEBUG_PRINTLN("")
   Serial.begin(115200);
   Serial.println(" I can print something");
-
+  pinMode(BUILTIN_LED, OUTPUT);
   
 
   WiFi.begin(ssid, password);
@@ -60,7 +60,7 @@ void setup() {
   hexStr2bArr(encryption_key, conf_key, sizeof(encryption_key));
   hexStr2bArr(authentication_key, conf_authkey, sizeof(authentication_key));
   Serial.println("Setup completed");
-
+  digitalWrite(BUILTIN_LED, HIGH);
 }
 
 void loop() {
@@ -230,9 +230,11 @@ void hexStr2bArr(uint8_t* dest, const char* source, int bytes_n)
 
 void sendmsg(String topic, String payload) {
   if (client.connected() && WiFi.status() == WL_CONNECTED) {
+    digitalWrite(BUILTIN_LED, LOW);
     // If we are connected to WiFi and MQTT, send. (From Niels Ørbæk)
     client.publish(topic.c_str(), payload.c_str());
     delay(10);
+    digitalWrite(BUILTIN_LED, HIGH);
   } else {
     // Otherwise, restart the chip, hoping that the issue resolved itself.
     delay(60*1000);
